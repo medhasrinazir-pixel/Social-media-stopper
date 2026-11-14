@@ -8,13 +8,18 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class AppMonitorService extends AccessibilityService {
+    // Only social-media and social-video apps are blocked.
+    // Calls, SMS/texting, WhatsApp, payments, maps, and location apps are intentionally not included.
     private static final Set<String> SOCIAL_APPS = new HashSet<>(Arrays.asList(
-            "com.instagram.android", "com.facebook.katana", "com.facebook.lite",
-            "com.zhiliaoapp.musically", "com.ss.android.ugc.trill", "com.twitter.android",
-            "com.x.android", "com.snapchat.android", "com.reddit.frontpage",
-            "com.google.android.youtube", "com.linkedin.android", "com.pinterest",
-            "com.discord", "com.whatsapp"
+            "com.instagram.android", "com.instagram.barcelona",
+            "com.facebook.katana", "com.facebook.lite",
+            "com.zhiliaoapp.musically", "com.ss.android.ugc.trill",
+            "com.twitter.android", "com.x.android",
+            "com.snapchat.android", "com.reddit.frontpage",
+            "com.google.android.youtube", "com.linkedin.android",
+            "com.pinterest", "com.discord"
     ));
+
     private String lastBlockedPackage = "";
     private long lastBlockTime = 0;
 
@@ -33,6 +38,7 @@ public class AppMonitorService extends AccessibilityService {
         if (packageName.equals(lastBlockedPackage) && now - lastBlockTime < 1500) return;
         lastBlockedPackage = packageName;
         lastBlockTime = now;
+
         Intent intent = new Intent(this, BlockActivity.class);
         intent.putExtra(BlockActivity.EXTRA_PACKAGE, packageName);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
