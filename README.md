@@ -1,24 +1,38 @@
-# Social Media Stopper (Android)
+# Social Media Stopper
 
-A small, parent-controlled Android app that detects launches of a configurable list of social-media apps and displays a block screen. Parents create a PIN, and the PIN is required to turn blocking on/off, change the PIN, or allow a selected app for 15 minutes.
+A small Android guardian-control tool for families.
 
-## Build and install
+What it does:
+- lets a parent/guardian create a PIN
+- turns blocking ON or OFF
+- keeps a list of social-media apps to block
+- watches for selected app launches through Android Accessibility
+- shows a block screen when a blocked app opens
+- allows the guardian to unlock a single app for 15 minutes using the PIN
 
-1. Open this repository in Android Studio and allow Gradle sync (Android Gradle Plugin 8.7.3; JDK 17; Android SDK 35).
-2. Build and install the `app` configuration on the child's Android phone.
-3. A parent/guardian opens the app and creates a 6–12 digit PIN.
-4. A parent enables blocking, then enables **Social Media Stopper app monitor** in Android **Settings → Accessibility**. Android will show its standard accessibility disclosure/confirmation; review and accept only if you agree.
+Important notes:
+- This is a practical app-level blocker, not a full OS-level lockdown.
+- Android Accessibility permission must be enabled by the parent/guardian.
+- It cannot block every browser or cloned app, and it only targets apps listed in the app's package list.
+- Real protection can be improved by combining this with Android Family Link or device-level parental controls.
 
-## Important limitations
+How to use:
+1. Open this project in Android Studio.
+2. Sync Gradle and install on the child device.
+3. Open the app and create a guardian PIN.
+4. Turn blocking ON.
+5. Go to Settings -> Accessibility -> Social Media Stopper and enable it.
+6. Add package names for apps you want blocked.
 
-- This app uses Android Accessibility events. Android must keep the service enabled; the user/device administrator can disable it, and some manufacturers may stop background services. It is not tamper-proof and does not block websites, other devices, or apps not listed in `AppMonitorService.java`.
-- The package list is an example starter list. Add package IDs for the specific apps you want to block. Different regional or lightweight versions may have different IDs.
-- A parent PIN is a local app control, not an Android system lock. Protect the device and PIN, and use Android/Google Family Link or your device manufacturer's parental-control features for stronger protections. Discuss the rules with your children and use monitoring transparently.
-- Reinstalling/clearing app data resets the locally stored PIN and settings.
+Example package names:
+- com.instagram.android
+- com.facebook.katana
+- com.snapchat.android
+- com.twitter.android
+- com.x.android
+- com.zhiliaoapp.musically
+- com.ss.android.ugc.trill
+- com.google.android.youtube
+- com.reddit.frontpage
 
-## Included controls
-
-- Parent PIN is stored as a salted PBKDF2 hash (not plain text).
-- PIN required for turning the block on/off and changing the PIN.
-- A parent can grant one detected app a 15-minute exception with the PIN.
-- The app does not collect or transmit usage data.
+This project is intentionally small and family-focused, and it does not send any usage data to a server.
